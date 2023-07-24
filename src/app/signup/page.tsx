@@ -3,7 +3,7 @@ import Link from "next/link"
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import axios from "axios"
-import toast from "react-hot-toast"
+import toast, {Toaster} from "react-hot-toast"
 
 
 export default function SignUpPage() {
@@ -26,8 +26,8 @@ export default function SignUpPage() {
       console.log("Signup success", response.data)
       router.push("/login");
     } catch (error: any) {
-      console.log("SignUp failed", error.message)
-      toast.error(error.message)
+      toast.error("User Already exists\n "+error.message)
+      console.log("SignUp failed", error.message)   
     } finally {
       setLoading(false)
     }

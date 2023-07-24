@@ -21,7 +21,8 @@ export async function POST(request: NextRequest) {
       );
     }
    
-    //hash password
+    //hash password 
+    //10 times iterate and encrypt the password
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
     const newUser = new User({
@@ -29,6 +30,8 @@ export async function POST(request: NextRequest) {
       email,
       password: hashedPassword,
     });
+
+    // save function from mongoose
     const savedUser = await newUser.save();
     console.log(savedUser);
 
