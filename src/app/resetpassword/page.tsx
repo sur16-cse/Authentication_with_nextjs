@@ -6,6 +6,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 export default function ResetPasswordPage() {
+  const [token, setToken] = useState("");
+  const [error, setError] = useState(false);
   const router = useRouter();
   const [user, setUser] = React.useState({
     password: "",
@@ -17,21 +19,30 @@ export default function ResetPasswordPage() {
   const onReset = async () => {
     try {
       setLoading(true);
-      const response = await axios.patch("/api/users/resetpassword", user.password);
+      const response = await axios.patch("/api/users/resetpassword", {
+        password: user.password,
+        token,
+      });
       console.log("password", response.data);
       router.push("/login");
     } catch (error: any) {
-      toast.error("User Already exists\n " + error.message);
-      console.log("SignUp failed", error.message);
+      toast.error("User verification failed\n " + error.message);
+      console.log("verification failed", error.message);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
+    const urlToken = window.location.search.split("=")[1];
+    setToken(urlToken || "");
+  }, []);
+
+  useEffect(() => {
     if (
       user.password.length > 0 &&
       user.confirmPassword.length > 0 &&
+      token.length > 0 &&
       user.password === user.confirmPassword
     ) {
       setButtonDisabled(false);

@@ -33,7 +33,8 @@ useEffect(()=>{
       toast.success("Login  success");
       router.push("/profile");
     } catch (error:any) {
-      console.log("Login failed",error.message)
+      toast.error(error.response.data.error)
+      console.log("Login failed",error.response.data.error)
     }finally{
       setLoading(false);
     }
