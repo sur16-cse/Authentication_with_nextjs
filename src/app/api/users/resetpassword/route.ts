@@ -12,7 +12,7 @@ export async function PATCH(request: NextRequest) {
     const { password,token } = reqBody;
     console.log(reqBody);
     const user = await User.findOne({
-      token: token,
+      forgotPasswordToken: token,
       });
 
     if (!user) {

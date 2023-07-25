@@ -7,9 +7,9 @@ export function middleware(request:NextRequest){
    const token= request.cookies.get('token')?.value || ''
 
    //path is public and having token then should not visit the signup and login
-   if(isPublicPath && token){
-    return NextResponse.redirect(new URL('/',request.nextUrl))
-   }
+//    if(isPublicPath && token){
+//     return NextResponse.redirect(new URL('/',request.nextUrl))
+//    }
 
    if(!isPublicPath && !token){
     return NextResponse.redirect(new URL('/login',request.nextUrl))
